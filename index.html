@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Advanced To-Do List</title>
 
+  <!-- ================= CSS ================= -->
   <style>
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
       background: #f2f2f2;
       transition: 0.3s;
+      max-width: 900px;
+      margin: auto;
     }
 
     body.dark {
@@ -18,28 +21,38 @@
     }
 
     h2 {
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+      text-align: center;
     }
 
-    input, select, button {
-      padding: 8px;
+    input,
+    select,
+    button {
+      padding: 10px;
       margin: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    button {
+      cursor: pointer;
     }
 
     ul {
       list-style: none;
       padding: 0;
-      margin-top: 10px;
+      margin-top: 15px;
     }
 
     .task-item {
       display: flex;
       flex-direction: column;
-      gap: 5px;
-      padding: 10px;
+      gap: 6px;
+      padding: 12px;
       background: white;
-      margin-bottom: 8px;
-      border-radius: 6px;
+      margin-bottom: 10px;
+      border-radius: 8px;
       transition: 0.3s;
       animation: fadeIn 0.3s;
     }
@@ -50,27 +63,84 @@
 
     .task-item.done .task-text {
       text-decoration: line-through;
-      opacity: 0.6;
+      opacity: 0.5;
     }
 
     .task-buttons {
       display: flex;
-      gap: 6px;
-      margin-top: 5px;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .task-buttons button {
+      flex: 1;
+    }
+
+    #countText {
+      font-weight: bold;
+      margin-top: 10px;
     }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(5px); }
-      to { opacity: 1; transform: translateY(0); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ----------------------------
+       MOBILE STYLES
+    ----------------------------- */
+    @media screen and (max-width: 600px) {
+
+      input,
+      select,
+      button {
+        width: 100%;
+        box-sizing: border-box;
+        margin: 6px 0;
+        font-size: 16px;
+      }
+
+      .task-buttons {
+        flex-direction: column;
+      }
+    }
+
+    /* ----------------------------
+       DESKTOP STYLES
+    ----------------------------- */
+    @media screen and (min-width: 601px) {
+
+      #searchInput,
+      #sortSelect,
+      #darkToggle {
+        display: inline-block;
+        width: auto;
+      }
+
+      .task-item {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .task-buttons {
+        flex-direction: row;
+        gap: 10px;
+      }
+
+      .task-item small {
+        margin-right: 10px;
+      }
     }
   </style>
 </head>
+
 <body>
 
   <h2>Advanced To-Do List</h2>
 
   <!-- Input -->
-  <input id="taskInput" placeholder="Enter task...">
+  <input id="taskInput" placeholder="Enter task..." />
 
   <select id="prioritySelect">
     <option>Low</option>
@@ -84,7 +154,7 @@
   <br><br>
 
   <!-- Search & Sort -->
-  <input id="searchInput" placeholder="Search tasks...">
+  <input id="searchInput" placeholder="Search tasks..." />
 
   <select id="sortSelect">
     <option value="az">A → Z</option>
@@ -96,10 +166,10 @@
 
   <br><br>
 
-  <!-- Export Import -->
+  <!-- Export / Import -->
   <button id="exportBtn">Export</button>
   <button id="importBtn">Import</button>
-  <input type="file" id="importFile" style="display:none">
+  <input type="file" id="importFile" style="display:none" />
 
   <!-- Counter -->
   <p id="countText"></p>
@@ -107,8 +177,7 @@
   <!-- Task List -->
   <ul id="taskList"></ul>
 
-
-  <!-- JavaScript -->
+  <!-- ================= JavaScript ================= -->
   <script>
     const input = document.getElementById("taskInput");
     const addBtn = document.getElementById("addBtn");
